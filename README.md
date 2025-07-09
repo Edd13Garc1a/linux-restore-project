@@ -34,8 +34,8 @@
 На VM1 (192.168.33.245):
 
 git clone https://github.com/Edd13Garc1a/linux-restore-project.git
-cd linux-restore-project/scripts
-bash deploy_all.sh
+cd linux-restore-project
+deploy_all.sh
 
 ---
 
