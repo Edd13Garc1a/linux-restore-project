@@ -48,6 +48,6 @@ Kibana: http://192.168.33.245:5601
 mysql -uroot -e 'SHOW SLAVE STATUS\\G'  # на VM2
 
 🧠 Автор
-📧 Email: Eddie.it.mt@gmail.com
 
-💻 GitHub: Edd13Garc1a
+📧 Email: Eddie.it.mt@gmail.com
+💻 GitHub: [Edd13Garc1a](https://github.com/Edd13Garc1a/)
