@@ -3,24 +3,31 @@ set -e
 
 REPO_URL="https://github.com/Edd13Garc1a/linux-restore-project.git"
 CLONE_DIR="/opt/web_project"
+SLAVE_IP="192.168.33.246"
+SLAVE_USER="odmin"
+SLAVE_PASS="Mimino_321"
 
-echo "[+] Клонируем проект с GitHub..."
+echo "[+] Клонируем проект на VM1..."
 rm -rf $CLONE_DIR
 git clone $REPO_URL $CLONE_DIR
 cd $CLONE_DIR/scripts
 
-echo -e "\n[1/5] Установка WordPress и Nginx"
-bash 2_install_nginx_wp.sh
+echo "[+] Копируем скрипты на VM2..."
+sshpass -p "$SLAVE_PASS" scp -r -o StrictHostKeyChecking=no ./ "$SLAVE_USER@$SLAVE_IP:/home/$SLAVE_USER/linux_restore_scripts"
 
-echo -e "\n[2/5] Установка и настройка MySQL master/slave"
-bash 4_install_mysql.sh
+echo "[+] Устанавливаем WordPress + Nginx на VM2 (backend)..."
+sshpass -p "$SLAVE_PASS" ssh -o StrictHostKeyChecking=no "$SLAVE_USER@$SLAVE_IP" "cd ~/linux_restore_scripts && sudo bash nginx_wp.sh backend"
 
-echo -e "\n[3/5] Установка ELK стека (Elasticsearch, Logstash, Kibana, Filebeat)"
-bash 3_install_elk.sh
+echo "[+] Устанавливаем WordPress + Nginx (балансировщик) на VM1..."
+sudo bash nginx_wp.sh frontend
 
-echo -e "\n[4/5] Бэкап слейва и отправка в GitHub"
-bash 7_backup_slave_and_push.sh
+echo "[+] Устанавливаем MySQL master/slave..."
+sudo bash install_mysql.sh
 
-echo -e "\n[5/5] Установка завершена успешно!"
-echo "WordPress: http://192.168.33.245"
-echo "Kibana: http://192.168.33.245:5601"
+echo "[+] Устанавливаем ELK стек на VM1..."
+sudo bash install_elk.sh
+
+echo "[+] Делаем бэкап и пушим с VM2..."
+sudo bash backup_slave_and_push.sh
+
+echo "[✔] Установка завершена. WordPress: http://192.168.33.245, Kibana: http://192.168.33.245:5601"
