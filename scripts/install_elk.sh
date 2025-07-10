@@ -10,15 +10,24 @@ echo "deb [signed-by=/usr/share/keyrings/elastic-keyring.gpg] https://artifacts.
 apt update
 apt install -y elasticsearch logstash kibana filebeat
 
+echo "[+] Конфигурируем Elasticsearch"
 sed -i 's/#network.host: .*/network.host: localhost/' /etc/elasticsearch/elasticsearch.yml
 systemctl enable elasticsearch
 systemctl start elasticsearch
 
+echo "[+] Конфигурируем Kibana"
 sed -i 's/#server.host: .*/server.host: "0.0.0.0"/' /etc/kibana/kibana.yml
 systemctl enable kibana
 systemctl start kibana
 
+echo "[+] Копируем logstash.conf"
+cp logstash.conf /etc/logstash/conf.d/logstash.conf
 systemctl enable logstash
 systemctl restart logstash
 
-echo "[+] ELK стек установлен"
+echo "[+] Устанавливаем и настраиваем Filebeat"
+filebeat modules enable nginx mysql
+systemctl enable filebeat
+systemctl restart filebeat
+
+echo "[✔] ELK стек полностью установлен и запущен"
