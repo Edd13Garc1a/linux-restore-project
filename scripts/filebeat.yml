@@ -1,0 +1,9 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/nginx/*.log
+      - /var/log/mysql/*.log
+
+output.logstash:
+  hosts: ["192.168.33.245:5044"]
