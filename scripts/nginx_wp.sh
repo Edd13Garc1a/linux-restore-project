@@ -18,6 +18,15 @@ if [ ! -d "$WP_DIR" ]; then
   unzip latest.zip
   rm latest.zip
   chown -R www-data:www-data wordpress
+echo "[+] Генерируем wp-config.php"
+cd /var/www/wordpress
+cp wp-config-sample.php wp-config.php
+
+sed -i "s/database_name_here/Otus_test/" wp-config.php
+sed -i "s/username_here/root/" wp-config.php
+sed -i "s/password_here/Testpass1\\\$/" wp-config.php
+sed -i "s/localhost/localhost/" wp-config.php
+
 fi
 
 if [ "$ROLE" == "frontend" ]; then
