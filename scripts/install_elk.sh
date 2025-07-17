@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-DEB_DIR="/home/odmin/ELK"
+DEB_DIR="/home/odmin/elk"
 SCRIPT_DIR="/home/odmin/linux_restore_scripts"
 
 echo "[1/9] Проверка наличия .deb пакетов в $DEB_DIR"
