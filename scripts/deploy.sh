@@ -13,11 +13,11 @@ git clone $REPO_URL $CLONE_DIR
 cd $CLONE_DIR/scripts
 
 echo "[+] Копируем скрипты на VM2..."
-sshpass -p "$SLAVE_PASS" scp -r -o StrictHostKeyChecking=no ./ "$SLAVE_USER@$SLAVE_IP:/home/$SLAVE_USER/linux_restore_scripts"
+sshpass -p "$SLAVE_PASS" scp -r -o StrictHostKeyChecking=no ~/scripts "$SLAVE_USER@$SLAVE_IP:/home/$SLAVE_USER/scripts"
 
 echo "[+] Устанавливаем WordPress + Nginx на VM2 (backend)..."
 sshpass -p "$SLAVE_PASS" ssh -o StrictHostKeyChecking=no "$SLAVE_USER@$SLAVE_IP" \
-"cd ~/linux_restore_scripts && echo '$SLAVE_PASS' | sudo -S bash nginx_wp.sh backend"
+"cd ~/scripts && echo '$SLAVE_PASS' | sudo -S bash nginx_wp.sh backend"
 
 echo "[+] Устанавливаем WordPress + Nginx на VM1 (балансировщик)..."
 sudo bash nginx_wp.sh frontend
@@ -30,7 +30,7 @@ sudo bash install_elk.sh
 
 echo "[+] Устанавливаем Filebeat на VM2..."
 sshpass -p "$SLAVE_PASS" ssh -o StrictHostKeyChecking=no "$SLAVE_USER@$SLAVE_IP" \
-"cd ~/linux_restore_scripts && echo '$SLAVE_PASS' | sudo -S bash install_filebeat.sh"
+"cd ~/scripts && echo '$SLAVE_PASS' | sudo -S bash install_filebeat.sh"
 
 echo "[+] Устанавливаем Filebeat на VM1..."
 sudo bash install_filebeat.sh
