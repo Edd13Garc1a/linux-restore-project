@@ -21,6 +21,7 @@ echo "[4/9] Конфигурация Elasticsearch"
 sudo tee /etc/elasticsearch/elasticsearch.yml > /dev/null <<EOF
 path.data: /var/lib/elasticsearch
 path.logs: /var/log/elasticsearch
+
 xpack.security.enabled: false
 xpack.security.enrollment.enabled: true
 
@@ -34,8 +35,6 @@ xpack.security.transport.ssl:
   keystore.path: certs/transport.p12
   truststore.path: certs/transport.p12
 cluster.initial_master_nodes: ["elk"]
-
-http.host: 0.0.0.0
 EOF
 
 sudo systemctl daemon-reexec
