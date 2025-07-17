@@ -13,7 +13,7 @@ git clone $REPO_URL $CLONE_DIR
 cd $CLONE_DIR/scripts
 
 echo "[+] Копируем скрипты на VM2..."
-sshpass -p "$SLAVE_PASS" scp -r -o StrictHostKeyChecking=no ~/scripts "$SLAVE_USER@$SLAVE_IP:/home/$SLAVE_USER/scripts"
+sshpass -p "$SLAVE_PASS" scp -r -o StrictHostKeyChecking=no ~/linux-restore-project/scripts "$SLAVE_USER@$SLAVE_IP:/home/$SLAVE_USER/scripts"
 
 echo "[+] Устанавливаем WordPress + Nginx на VM2 (backend)..."
 sshpass -p "$SLAVE_PASS" ssh -o StrictHostKeyChecking=no "$SLAVE_USER@$SLAVE_IP" \
