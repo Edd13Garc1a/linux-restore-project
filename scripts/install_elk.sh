@@ -98,6 +98,10 @@ sudo systemctl restart logstash
 
 echo "[7/9] Конфигурация Filebeat"
 sudo tee /etc/filebeat/filebeat.yml > /dev/null <<EOF
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
 filebeat.inputs:
 - type: filestream
   id: my-filestream-id
